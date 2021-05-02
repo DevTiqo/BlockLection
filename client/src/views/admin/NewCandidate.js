@@ -74,7 +74,7 @@ import {Button,Container,Row,ListGroup} from 'react-bootstrap';
             var data = response.data;
             console.log(response.data);
           setLoading(false)
-            window.location.reload();
+            // window.location.reload();
                  
                 
         })

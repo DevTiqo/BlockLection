@@ -65,25 +65,27 @@ class VoteCount extends Component {
     }
 
     render(){
-        const electionList =this.state.candidates[0]!==undefined? this.state.candidates.map(candidates => {
+        const electionList =this.state.candidates[0]!==undefined? this.state.candidates[0].map(candidates => {
             return (
                                
                        
-  <Card  key={candidates.id} className="text-center">
+ <Card  key={candidates.id} className="text-center" >
     <Container>
   <Row className="justify-content-md-center">
-      {/* <Image height="100" src={`http://localhost:8000/${candidates.voterImageUrl}`} rounded /> */}
+      <Image height="100" src={`http://localhost:8000/${candidates.candImageUrl}`} rounded />
      
              
   </Row>
 </Container>
     <Card.Body>
       <Card.Title>{candidates.name}</Card.Title>
-      <ListGroup variant="flush">
-    <ListGroup.Item>Cras justo odio</ListGroup.Item>
-    <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
-    <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
+      <ListGroup >
+    <ListGroup.Item>For A Free and Fair Election</ListGroup.Item>
   </ListGroup>
+      <Card.Text>
+       {candidates.candAbout}
+       </Card.Text>
+    
       <Card.Text>
        {candidates.details}
         </Card.Text>

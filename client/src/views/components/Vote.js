@@ -36,14 +36,17 @@ class Vote extends Component {
 
 
     vote(id) {
-        console.log(this.state.selectedId)
+       
         this.setState({ loading: true })
-        console.log(this.state.account)
-        this.state.election.methods.vote(id).send({ from: this.state.account })
-        .once('receipt', (receipt) => {
-            this.setState({ loading: false })
-            window.location.assign("/");
-        })
+        
+
+        BlockChain.vote(id).then(update => {
+         this.setState({ loading: false })
+       
+
+            // window.location.assign("/");
+    });
+        
     }
 
     componentDidMount(){

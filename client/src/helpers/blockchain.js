@@ -8,6 +8,7 @@ export const BlockChain = {
     loadWeb3,
 loadBlockchainData,
 addCand,
+vote,
     // adminLogin,
     // candLogin,
     // logout,
@@ -94,6 +95,17 @@ async function loadBlockchainData(){
     }
 
 
+
+   async function vote(id) {
+        
+       console.log(account);
+
+        election.methods.vote(id).send({ from: account ,gas:520000})
+        .once('receipt', (receipt) => {
+       console.log(receipt);
+             return receipt;
+        })
+    }
 
    
     
