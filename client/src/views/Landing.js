@@ -9,6 +9,7 @@ import Nav from 'react-bootstrap/Nav';
 import Toast from 'react-bootstrap/Toast';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
+import Image from 'react-bootstrap/Image';
 
 
 
@@ -17,6 +18,8 @@ const Landing = () => (
     <section>
         <Navbar expand="lg" variant="light" bg="light">
             <Container>
+
+                <Image src="/images/download3.png" height="50" rounded />
                 <Navbar.Brand href="#">Blocklection</Navbar.Brand>
             </Container>
         </Navbar>
@@ -30,6 +33,8 @@ const Landing = () => (
 
 
                 <section className="jumbotron text-center">
+
+
                     <img style={{ width: '45%', margin: 'auto', display: 'block' }} alt="Image" src="/images/capture.png" />
                     <h1 className="cover-heading">Welcome to Blocklection</h1>
                     <p className="lead">This Project uses blockchain technology to carry out democratic elections</p>

@@ -10,6 +10,7 @@ import Toast from 'react-bootstrap/Toast';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 
+import Image from 'react-bootstrap/Image';
 
 
 const RfidVote = () => (
@@ -21,7 +22,7 @@ const RfidVote = () => (
 
 
             <main role="main" className="inner cover">
-
+                <Image src="/images/download3.png" height="70" rounded />
 
 
                 <section className="jumbotron text-center">
@@ -33,13 +34,13 @@ const RfidVote = () => (
                         <Button variant="success" size="lg" href="#">Capture</Button>{' '}
                     </div>
 
-                    
+
                     <p className="lead pt-4">
                         <Button variant="primary" href="/user/rfidregister">Register for RFID</Button>{' '}
 
                     </p>
 
-                    
+
 
 
                 </section>

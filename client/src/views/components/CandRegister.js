@@ -3,7 +3,7 @@ import axios from 'axios'
 import Form from 'react-bootstrap/Form'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
-import {Alert,Modal,Row,Col} from 'react-bootstrap'
+import { Alert, Modal, Row, Col, Image } from 'react-bootstrap'
 import { CameraFeed } from './CameraFeed';
 
 
@@ -15,7 +15,7 @@ const Register = () => {
     const [password, setPassword] = useState('')
     const [cpassword, setCPassword] = useState('')
     const [aboutYou, setAboutYou] = useState('')
-    const [selectedFile,setSelectedFile] = useState('');
+    const [selectedFile, setSelectedFile] = useState('');
     const [show, setShow] = useState(false);
     const [error, setError] = useState("");
     const [department, setDepartment] = useState("Computer Science");
@@ -23,26 +23,26 @@ const Register = () => {
     const [electionId, setElectionId] = useState('')
 
 
-const [final,setFinal]=useState([]);
+    const [final, setFinal] = useState([]);
 
-            
-            
-            
-           
 
-    useEffect(()=>{
-       
-      
+
+
+
+
+    useEffect(() => {
+
+
         axios.get('http://localhost:8000/api/election', {})
-        .then(function(response){ 
-            var data = response.data;
-          
+            .then(function (response) {
+                var data = response.data;
+
                 setFinal(data);
-            
-        })
-        .catch(function(err){
-            console.error(err);
-        });
+
+            })
+            .catch(function (err) {
+                console.error(err);
+            });
 
     }, []);
 
@@ -50,234 +50,234 @@ const [final,setFinal]=useState([]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
-        const data = new FormData() 
-         data.append('file', selectedFile)
+
+        const data = new FormData()
+        data.append('file', selectedFile)
         console.log(data)
-        if(selectedFile!==''){
-        axios.post('http://localhost:8000/api/candRegister', {
-            name:name,
-            email: email,
-            electionId:electionId,
-            department:department,
-            aboutYou:aboutYou,
-            studentStatus:studentStatus,
-            password: password,
-            cpassword:cpassword
-        })
-        .then(function (response) {
-           axios.post('http://localhost:8000/api/upload', data)
-            .then(function (responseImg) {
-                 axios.post('http://localhost:8000/api/changeImageUrlCand', {
-                     imageUrl: responseImg.data.filename,
-                     email:email
-                 })
-            .then(function (response) {
-                if (response.data) {
-                    window.location.assign("/user/candlogin")
-                } else {
-                    alert('Incorrect Registration process');
-                }
+        if (selectedFile !== '') {
+            axios.post('http://localhost:8000/api/candRegister', {
+                name: name,
+                email: email,
+                electionId: electionId,
+                department: department,
+                aboutYou: aboutYou,
+                studentStatus: studentStatus,
+                password: password,
+                cpassword: cpassword
             })
-            .catch(function (err) {
-                console.log(err.response.data);
-                setShow(true);
-                setError(err.response.data.error);
-            });
-            })
-            .catch(function (err) {
-                console.log(err.response.data);
-                setShow(true)
-                setError(err.response.data.error);
-                
-            });
-        })
-            .catch(function (err) {
-                console.log(err.response.data);
-                setShow(true)
-                setError(err.response.data.error);
-            });
+                .then(function (response) {
+                    axios.post('http://localhost:8000/api/upload', data)
+                        .then(function (responseImg) {
+                            axios.post('http://localhost:8000/api/changeImageUrlCand', {
+                                imageUrl: responseImg.data.filename,
+                                email: email
+                            })
+                                .then(function (response) {
+                                    if (response.data) {
+                                        window.location.assign("/user/candlogin")
+                                    } else {
+                                        alert('Incorrect Registration process');
+                                    }
+                                })
+                                .catch(function (err) {
+                                    console.log(err.response.data);
+                                    setShow(true);
+                                    setError(err.response.data.error);
+                                });
+                        })
+                        .catch(function (err) {
+                            console.log(err.response.data);
+                            setShow(true)
+                            setError(err.response.data.error);
+
+                        });
+                })
+                .catch(function (err) {
+                    console.log(err.response.data);
+                    setShow(true)
+                    setError(err.response.data.error);
+                });
         }
-        else{
-             console.log({'error':"No Photo Captured"});
-                setShow(true)
-                setError("No Photo Captured" );
+        else {
+            console.log({ 'error': "No Photo Captured" });
+            setShow(true)
+            setError("No Photo Captured");
         }
     }
 
-        const onChangeHandler= (event)=>{
+    const onChangeHandler = (event) => {
 
-             setSelectedFile(
-                event.target.files[0]
-             )
-             console.log(event.target.files[0])
+        setSelectedFile(
+            event.target.files[0]
+        )
+        console.log(event.target.files[0])
+
+    }
+
+    const webcamRef = React.useRef('cam');
+
+
+
+    const uploadImage = async file => {
+        setSelectedFile(
+            file
+        )
+
+        console.log(file);
+
+        // Connect to a seaweedfs instance
+    };
+
+    function AlertDismissibleExample(props) {
+
+
+        if (show) {
+            return (
+                <Modal
+                    {...props}
+                    size="lg"
+                    aria-labelledby="contained-modal-title-vcenter"
+                    centered
+
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title id="contained-modal-title-vcenter">
+                            Error
+        </Modal.Title>
+                    </Modal.Header>
+                    <Alert variant="danger">
+                        <h3>
+                            {error}
+                        </h3>
+                    </Alert>
+                    <Modal.Footer>
+                        <Button onClick={props.onHide}>Close</Button>
+                    </Modal.Footer>
+                </Modal>
+
+            );
 
         }
+        return (<div></div>)
 
-   const webcamRef = React.useRef('cam');
+    }
 
- 
- 
- const uploadImage = async file => {
-     setSelectedFile(
-                file
-             )
-
-    console.log(file);
-
-    // Connect to a seaweedfs instance
-};
-    
-  function AlertDismissibleExample(props) {
-  
-
-  if (show) {
-    return (
-        <Modal
-        {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-      
-    >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Error
-        </Modal.Title>
-      </Modal.Header>
-      <Alert variant="danger">
-      <h3>
-         {error}
-        </h3>
-      </Alert>
-      <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
-      </Modal.Footer>
-    </Modal>
-      
-    );
-    
-  }
-  return (<div></div>)
-  
-}
-
-  const videoConstraints = {
-  width: 350,
-  height: 350,
-  facingMode: "user"
-};
+    const videoConstraints = {
+        width: 350,
+        height: 350,
+        facingMode: "user"
+    };
 
 
     return (
         <Container>
-       <div  className="mb-4" style={{ textAlign: "center" }}>
-        
+            <div className="mb-4" style={{ textAlign: "center" }}>
 
-            <Row className="justify-content-md-center"> 
-               
-                 
-            <Col sm><img style={{ width: '30%',display: 'block' }} alt="Image" src="/images/Candidate.png" />
-                </Col>
-    <Col sm> <h2>Register As Candidate</h2></Col>
-    <Col sm> <p>- OR -</p>
-                 <Button variant="warning" href="./register">
-                     Register as Voter
+
+                <Row className="justify-content-md-center">
+
+
+                    <Col sm><img style={{ width: '30%', display: 'block' }} alt="Image" src="/images/Candidate.png" />
+                    </Col>
+                    <Col sm>  <Image src="/images/download.png" rounded /><h2>Register As Candidate</h2></Col>
+                    <Col sm> <p>- OR -</p>
+                        <Button variant="warning" href="./register">
+                            Register as Voter
             </Button></Col>
-            </Row>
+                </Row>
 
             </div>
-        <Row> 
-      
+            <Row>
 
- <Container className="col-md-6 justify-content-center">
- 
-    
 
-        
+                <Container className="col-md-6 justify-content-center">
 
-        <div className="">
-            <h4>Candidate Capture</h4>
-            <p></p>
-            <CameraFeed sendFile={uploadImage} />
-        </div>
- 
 
-      </Container>
-        <Container className="col-md-6" style={{ Margin: "0 auto", maxWidth: "500px", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
-        
-            <h4>Candidate Form</h4>
 
-            <Form onSubmit={handleSubmit}>
-                <Form.Group controlId="formBasicEmail">
-                    <Form.Label>Email address</Form.Label>
-                    <Form.Control required type="email" placeholder="Enter email" onChange={(e) => setEmail(e.target.value)} />
-                    <Form.Text className="text-muted">
-                        We'll never share your email with anyone else.
+
+
+                    <div className="">
+                        <h4>Candidate Capture</h4>
+                        <p></p>
+                        <CameraFeed sendFile={uploadImage} />
+                    </div>
+
+
+                </Container>
+                <Container className="col-md-6" style={{ Margin: "0 auto", maxWidth: "500px", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
+
+                    <h4>Candidate Form</h4>
+
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Group controlId="formBasicEmail">
+                            <Form.Label>Email address</Form.Label>
+                            <Form.Control required type="email" placeholder="Enter email" onChange={(e) => setEmail(e.target.value)} />
+                            <Form.Text className="text-muted">
+                                We'll never share your email with anyone else.
               </Form.Text>
-                </Form.Group>
-                 <Form.Group controlId="formName">
-                    <Form.Label>Name</Form.Label>
-                    <Form.Control required type="text" placeholder="Name" onChange={(e) => setName(e.target.value)} />
-                </Form.Group>
-                 <Form.Group controlId="exampleForm.ControlSelect1">
-                    <Form.Label>Department</Form.Label>
-                    <Form.Control as="select" onChange={(e) => setDepartment(e.target.value)}>
-                    <option value="Computer Science">Computer Science</option>
-                    <option value="BioChemistry">BioChemistry</option>
-                    <option value="Physics">Physics</option>
-                    <option value="Medicine">Medicine</option>
-                    <option value="Political Science">Political Science</option>
-                    </Form.Control>
-                </Form.Group>
-                 <Form.Group controlId="exampleForm.ControlSelect1">
-                    <Form.Label>Student Status</Form.Label>
-                    <Form.Control as="select" onChange={(e) => setStudentStatus(e.target.value)}>
-                    <option value="Under-Graduate">Under-Graduate</option>
-                    <option value="Post-Graduate">Post-Graduate</option>
-                    <option value="Alumni">Alumni</option>
-                    </Form.Control>
-                </Form.Group>
-                 <Form.Group controlId="formAbout">
-                    <Form.Label>About You</Form.Label>
-                    <Form.Control required type="text" placeholder="About You" onChange={(e) => setAboutYou(e.target.value)} />
-                </Form.Group>
-                  <Form.Group controlId="exampleForm.ControlSelect1">
-                    <Form.Label>Election</Form.Label>
-                    <Form.Control as="select" onChange={(e) =>setElectionId(e.target.value)}>
-                    <option value="">Select Election</option>
-                    
-                   {final.length>0?final.map(election=>{
-                       return (
-                        <option value={election.election_id}>{election.election_name}</option>
-                       );
-                 }) :
-                        <option value="">No Available Election Yet</option>
-                       }
-                    
-                    </Form.Control>
-                </Form.Group>
-                
-                <Form.Group controlId="formBasicPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control required type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-                </Form.Group>
-                <Form.Group controlId="formBasicPassword2">
-                    <Form.Label>Confirm Password</Form.Label>
-                    <Form.Control required type="password" placeholder="Confirm Password" onChange={(e) => setCPassword(e.target.value)} />
-                </Form.Group>
-      
-           
-                <Form.Group controlId="formBasicCheckbox">
-                    <Form.Check type="checkbox" label="Keep me Signed In" />
-                </Form.Group>
-                <Button variant="primary" type="submit">
-                    Submit
+                        </Form.Group>
+                        <Form.Group controlId="formName">
+                            <Form.Label>Name</Form.Label>
+                            <Form.Control required type="text" placeholder="Name" onChange={(e) => setName(e.target.value)} />
+                        </Form.Group>
+                        <Form.Group controlId="exampleForm.ControlSelect1">
+                            <Form.Label>Department</Form.Label>
+                            <Form.Control as="select" onChange={(e) => setDepartment(e.target.value)}>
+                                <option value="Computer Science">Computer Science</option>
+                                <option value="BioChemistry">BioChemistry</option>
+                                <option value="Physics">Physics</option>
+                                <option value="Medicine">Medicine</option>
+                                <option value="Political Science">Political Science</option>
+                            </Form.Control>
+                        </Form.Group>
+                        <Form.Group controlId="exampleForm.ControlSelect1">
+                            <Form.Label>Student Status</Form.Label>
+                            <Form.Control as="select" onChange={(e) => setStudentStatus(e.target.value)}>
+                                <option value="Under-Graduate">Under-Graduate</option>
+                                <option value="Post-Graduate">Post-Graduate</option>
+                                <option value="Alumni">Alumni</option>
+                            </Form.Control>
+                        </Form.Group>
+                        <Form.Group controlId="formAbout">
+                            <Form.Label>About You</Form.Label>
+                            <Form.Control required type="text" placeholder="About You" onChange={(e) => setAboutYou(e.target.value)} />
+                        </Form.Group>
+                        <Form.Group controlId="exampleForm.ControlSelect1">
+                            <Form.Label>Election</Form.Label>
+                            <Form.Control as="select" onChange={(e) => setElectionId(e.target.value)}>
+                                <option value="">Select Election</option>
+
+                                {final.length > 0 ? final.map(election => {
+                                    return (
+                                        <option value={election.election_id}>{election.election_name}</option>
+                                    );
+                                }) :
+                                    <option value="">No Available Election Yet</option>
+                                }
+
+                            </Form.Control>
+                        </Form.Group>
+
+                        <Form.Group controlId="formBasicPassword">
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control required type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+                        </Form.Group>
+                        <Form.Group controlId="formBasicPassword2">
+                            <Form.Label>Confirm Password</Form.Label>
+                            <Form.Control required type="password" placeholder="Confirm Password" onChange={(e) => setCPassword(e.target.value)} />
+                        </Form.Group>
+
+
+                        <Form.Group controlId="formBasicCheckbox">
+                            <Form.Check type="checkbox" label="Keep me Signed In" />
+                        </Form.Group>
+                        <Button variant="primary" type="submit">
+                            Submit
             </Button>
-            <AlertDismissibleExample show={show} onHide={() => setShow(false)}/>
-            </Form>
-        </Container>
-        </Row>
+                        <AlertDismissibleExample show={show} onHide={() => setShow(false)} />
+                    </Form>
+                </Container>
+            </Row>
         </Container>
     )
 

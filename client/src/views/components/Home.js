@@ -13,6 +13,8 @@ import {
 import Nav from 'react-bootstrap/Nav';
 import Toast from 'react-bootstrap/Toast';
 import Row from 'react-bootstrap/Row';
+
+import Image from 'react-bootstrap/Image';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 
@@ -40,8 +42,9 @@ const Home = ({ routes }) => {
 
     return (
         <Container className="p-3">
-
+            <Image src="/images/download3.png" height="100" rounded />
             <Jumbotron>
+
                 <Container>
                     <Row>
                         <div className="col-md-9">
@@ -83,7 +86,7 @@ const Home = ({ routes }) => {
                                         <button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>
                                     </div>
                                     <small className="text-muted">
-                                    <div className=" "><FontAwesomeIcon icon={faCheck} /> Assured</div>
+                                        <div className=" "><FontAwesomeIcon icon={faCheck} /> Assured</div>
                                     </small>
                                 </div>
                             </div>
@@ -101,10 +104,10 @@ const Home = ({ routes }) => {
                                         <button type="button" className="btn btn-sm btn-outline-secondary">View</button>
                                         <button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>
                                     </div>
-                                  <small className="text-muted">
-                                    <div className=" "><FontAwesomeIcon icon={faCheck} /> Assured</div>
+                                    <small className="text-muted">
+                                        <div className=" "><FontAwesomeIcon icon={faCheck} /> Assured</div>
                                     </small>
-                                      </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -122,10 +125,10 @@ const Home = ({ routes }) => {
                                         <button type="button" className="btn btn-sm btn-outline-secondary">View</button>
                                         <button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>
                                     </div>
-                                   <small className="text-muted">
-                                    <div className=" "><FontAwesomeIcon icon={faCheck} /> Assured</div>
+                                    <small className="text-muted">
+                                        <div className=" "><FontAwesomeIcon icon={faCheck} /> Assured</div>
                                     </small>
-                                       </div>
+                                </div>
                             </div>
                         </div>
 

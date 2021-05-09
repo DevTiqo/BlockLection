@@ -100,6 +100,7 @@ const Candidates =(props)=> {
         }) 
         return(
             <Container>
+              <Image src="/images/download3.png" height="70" rounded />
                         <h3>Candidates</h3>
                    
                     <CardColumns>

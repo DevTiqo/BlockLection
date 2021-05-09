@@ -13,6 +13,8 @@ import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 
+import Image from 'react-bootstrap/Image';
+
 
 const ExampleToast = ({ children }) => {
     const [show, toggleShow] = useState(false);
@@ -37,7 +39,7 @@ const Home = ({ routes }) => {
 
     return (
         <Container className="p-3">
-
+            <Image src="/images/download3.png" height="70" rounded />
             <Jumbotron>
                 <Container>
                     <Row>

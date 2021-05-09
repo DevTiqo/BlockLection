@@ -10,6 +10,8 @@ import { faLock } from '@fortawesome/free-solid-svg-icons'
 import Nav from 'react-bootstrap/Nav';
 import Toast from 'react-bootstrap/Toast';
 import Container from 'react-bootstrap/Container';
+
+import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
 
 
@@ -23,21 +25,21 @@ const RfidRegister = () => (
 
 
             <main role="main" className="inner cover">
-
+                <Image src="/images/download3.png" height="70" rounded />
 
 
                 <section className="jumbotron text-center">
                     <img style={{ width: '45%', margin: 'auto', display: 'block' }} alt="Image" src="/images/rfid.png" />
                     <h1 className="cover-heading">RFID Registration</h1>
                     <p className="lead">This Project RFID to secure all voting processes</p>
-                    
-                    
-                     <div className="lead py-4">
+
+
+                    <div className="lead py-4">
                         <Button variant="success" size="lg" href="#">Capture</Button>{' '}
                     </div>
 
 
-                 
+
 
                     <div className=" pt-4"><FontAwesomeIcon icon={faLock} /> Secured</div>
                 </section>

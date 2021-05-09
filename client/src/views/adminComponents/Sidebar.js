@@ -8,12 +8,14 @@ import {
     CDBSidebarMenuItem,
 } from 'cdbreact';
 import { NavLink } from 'react-router-dom';
-import {Button,NavDropdown} from 'react-bootstrap';
+import { Button, NavDropdown } from 'react-bootstrap';
 import {
     Link,
     Route,
     useLocation
 } from "react-router-dom";
+
+import Image from 'react-bootstrap/Image';
 import Nav from 'react-bootstrap/Nav';
 
 import Navbar from 'react-bootstrap/Navbar';
@@ -30,6 +32,7 @@ const Sidebar = props => {
                         className="text-decoration-none"
                         style={{ color: 'inherit' }}
                     >
+                        <Image src="/images/download.png" height="50" rounded />
                         Admin
           </a>
                 </CDBSidebarHeader>
@@ -40,20 +43,20 @@ const Sidebar = props => {
                 <CDBSidebarContent className="sidebar-content">
 
                     <CDBSidebarMenu>
-<CDBSidebarMenuItem icon="lock">
+                        <CDBSidebarMenuItem icon="lock">
 
-                      {
-                      props.user?
-                      props.user.isAdmin==true ?
-                      <Button className="btn-danger btn btn-sm mx-4 " onClick={props.logout}>
-                            Logout</Button>:
-                            <NavLink className="btn-primary btn btn-sm mx-4 "  to="/admin/login">
-                            Login</NavLink>
-                          :  
-                           <NavLink className="btn-primary btn btn-sm mx-4 "  to="/admin/login">
-                            Login</NavLink>
-                            }  
-</CDBSidebarMenuItem>
+                            {
+                                props.user ?
+                                    props.user.isAdmin == true ?
+                                        <Button className="btn-danger btn btn-sm mx-4 " onClick={props.logout}>
+                                            Logout</Button> :
+                                        <NavLink className="btn-primary btn btn-sm mx-4 " to="/admin/login">
+                                            Login</NavLink>
+                                    :
+                                    <NavLink className="btn-primary btn btn-sm mx-4 " to="/admin/login">
+                                        Login</NavLink>
+                            }
+                        </CDBSidebarMenuItem>
 
                         <NavLink exact to="/admin/home" activeClassName="activeClicked">
                             <CDBSidebarMenuItem icon="columns">Dashboard</CDBSidebarMenuItem>
@@ -62,7 +65,7 @@ const Sidebar = props => {
                         <NavLink exact to="/admin/elections" activeClassName="activeClicked">
                             <CDBSidebarMenuItem icon="table">Elections</CDBSidebarMenuItem>
                         </NavLink>
-                        
+
                         <NavLink exact to="/admin/candidates" activeClassName="activeClicked">
                             <CDBSidebarMenuItem icon="chart-line">
                                 Candidates
@@ -84,8 +87,8 @@ const Sidebar = props => {
                             padding: '30px 5px',
                         }}
                     >
-                        
-          </div>
+
+                    </div>
                 </CDBSidebarFooter>
             </CDBSidebar>
 

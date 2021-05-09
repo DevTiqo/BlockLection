@@ -6,8 +6,8 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import CardColumns from 'react-bootstrap/CardColumns';
-import {Button,Container,Row,ListGroup} from 'react-bootstrap';
-import {BlockChain} from '../../helpers/blockchain.js';
+import { Button, Container, Row, ListGroup } from 'react-bootstrap';
+import { BlockChain } from '../../helpers/blockchain.js';
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -16,12 +16,12 @@ class VoteCount extends Component {
     async componentWillMount() {
         await BlockChain.loadWeb3()
         await BlockChain.loadBlockchainData()
-         const candidates =  this.setState({
-                        candidates: [...this.state.candidates, await BlockChain.loadCandidates(this.props.match.params.id)]
-                    })
-      
-      }
-    
+        const candidates = this.setState({
+            candidates: [...this.state.candidates, await BlockChain.loadCandidates(this.props.match.params.id)]
+        })
+
+    }
+
 
 
     handleInputChange = (e) => {
@@ -37,18 +37,18 @@ class VoteCount extends Component {
         console.log(this.state.selectedId)
         this.setState({ loading: true })
         this.state.election.methods.vote(id).send({ from: this.state.account })
-        .once('receipt', (receipt) => {
-            this.setState({ loading: false })
-            window.location.assign("/");
-        })
+            .once('receipt', (receipt) => {
+                this.setState({ loading: false })
+                window.location.assign("/");
+            })
     }
 
-    componentDidMount(){
+    componentDidMount() {
         let id = this.props.match.params.id;
         this.setState({
             id: id,
         });
-          
+
     }
 
     constructor(props) {
@@ -64,50 +64,51 @@ class VoteCount extends Component {
         }
     }
 
-    render(){
-        const electionList =this.state.candidates[0]!==undefined? this.state.candidates[0].map(candidates => {
+    render() {
+        const electionList = this.state.candidates[0] !== undefined ? this.state.candidates[0].map(candidates => {
             return (
-                               
-                       
- <Card  key={candidates.id} className="text-center" >
-    <Container>
-  <Row className="justify-content-md-center">
-      <Image height="100" src={`http://localhost:8000/${candidates.candImageUrl}`} rounded />
-     
-             
-  </Row>
-</Container>
-    <Card.Body>
-      <Card.Title>{candidates.name}</Card.Title>
-      <ListGroup >
-    <ListGroup.Item>For A Free and Fair Election</ListGroup.Item>
-  </ListGroup>
-      <Card.Text>
-       {candidates.candAbout}
-       </Card.Text>
-    
-      <Card.Text>
-       {candidates.details}
-        </Card.Text>
-<Row >
-     <h2>
-     {candidates.voteCount}
-               </h2>  
-               <h3>
-                votes
-               </h3> 
-               </Row> 
-    </Card.Body>
-    <Card.Footer>
-      <small className="text-muted">Last updated {Math.floor((Math.random() * 60) + 1)} mins ago</small>
-    </Card.Footer>
-  </Card>
+
+
+                <Card key={candidates.id} className="text-center" >
+                    <Container>
+                        <Row className="justify-content-md-center">
+                            <Image height="100" src={`http://localhost:8000/${candidates.candImageUrl}`} rounded />
+
+
+                        </Row>
+                    </Container>
+                    <Card.Body>
+                        <Card.Title>{candidates.name}</Card.Title>
+                        <ListGroup >
+                            <ListGroup.Item>For A Free and Fair Election</ListGroup.Item>
+                        </ListGroup>
+                        <Card.Text>
+                            {candidates.candAbout}
+                        </Card.Text>
+
+                        <Card.Text>
+                            {candidates.details}
+                        </Card.Text>
+                        <Row >
+                            <h2>
+                                {candidates.voteCount}
+                            </h2>
+                            <h3>
+                                votes
+               </h3>
+                        </Row>
+                    </Card.Body>
+                    <Card.Footer>
+                        <small className="text-muted">Last updated {Math.floor((Math.random() * 60) + 1)} mins ago</small>
+                    </Card.Footer>
+                </Card>
             )
-        }) : <div></div> 
-        return(
+        }) : <div></div>
+        return (
             <div className="container">
                 <ul className="collection">
-                    <h3>Vote Count For</h3>
+                    <Image src="/images/download3.png" height="70" rounded />
+                    <h3>Vote Count</h3>
                     <CardColumns>
                         {electionList}
                     </CardColumns>
