@@ -20,7 +20,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 const fs = require('fs');
- const mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 
 var storage = multer.diskStorage({
@@ -28,7 +28,7 @@ var storage = multer.diskStorage({
         cb(null, 'public')
     },
     filename: function (req, file, cb) {
-        cb(null, Date.now() + '-' + file.originalname +'.png')
+        cb(null, Date.now() + '-' + file.originalname + '.png')
     }
 })
 
@@ -63,9 +63,10 @@ app.get('/api/election', function (req, res) {
 app.get('/api/candidates', function (req, res) {
     var candidateNames = []
     var candidateElectionId = []
-      var candidateDepartment = []
-        var candidateStudentStatus = []
-        var candidateAdminVerified = []
+    var candidateDepartment = []
+    var candidateFaculty = []
+    var candidateStudentStatus = []
+    var candidateAdminVerified = []
     var candidateIds = []
     var candidateAbout = []
     var candidateImageUrls = []
@@ -77,11 +78,12 @@ app.get('/api/candidates', function (req, res) {
             candidateNames = eachOne[i].name
             candidateElectionId = eachOne[i].election_id
             candidateIds = eachOne[i]._id
-             candidateDepartment = eachOne[i].department
-             candidateAdminVerified = eachOne[i].adminVerified
-             candidateAbout = eachOne[i].aboutYou
-             candidateStudentStatus = eachOne[i].studentStatus
-            
+            candidateDepartment = eachOne[i].department
+            candidateFaculty = eachOne[i].faculty
+            candidateAdminVerified = eachOne[i].adminVerified
+            candidateAbout = eachOne[i].aboutYou
+            candidateStudentStatus = eachOne[i].studentStatus
+
             candidateImageUrls = eachOne[i].imageUrl
             candidateEmail = eachOne[i].email
             candidateDateOfReg = eachOne[i].date
@@ -94,6 +96,7 @@ app.get('/api/candidates', function (req, res) {
                 'candidate_adminVerified': eachOne[i].adminVerified,
                 'candidate_about': eachOne[i].aboutYou,
                 'candidate_department': eachOne[i].department,
+                'candidate_faculty': eachOne[i].faculty,
                 'candidate_studentStatus': eachOne[i].studentStatus,
                 'candidateEmail': eachOne[i].email,
                 'candidateDateOfReg': eachOne[i].date
@@ -108,25 +111,27 @@ app.get('/api/candidates', function (req, res) {
 app.get('/api/newcandidates', function (req, res) {
     var candidateNames = []
     var candidateElectionId = []
-      var candidateDepartment = []
-        var candidateStudentStatus = []
-        var candidateAdminVerified = []
+    var candidateDepartment = []
+    var candidateFaculty = []
+    var candidateStudentStatus = []
+    var candidateAdminVerified = []
     var candidateIds = []
     var candidateAbout = []
     var candidateImageUrls = []
     var candidateEmail = []
     var candidateDateOfReg = []
     var final = []
-    candidates.find({electionId:req.body.id,adminVerified:false}).then(eachOne => {
+    candidates.find({ electionId: req.body.id, adminVerified: false }).then(eachOne => {
         for (i = 0; i < eachOne.length; i++) {
             candidateNames = eachOne[i].name
             candidateElectionId = eachOne[i].election_id
             candidateIds = eachOne[i]._id
-             candidateDepartment = eachOne[i].department
-             candidateAdminVerified = eachOne[i].adminVerified
-             candidateAbout = eachOne[i].aboutYou
-             candidateStudentStatus = eachOne[i].studentStatus
-            
+            candidateDepartment = eachOne[i].department
+            candidateFaculty = eachOne[i].faculty
+            candidateAdminVerified = eachOne[i].adminVerified
+            candidateAbout = eachOne[i].aboutYou
+            candidateStudentStatus = eachOne[i].studentStatus
+
             candidateImageUrls = eachOne[i].imageUrl
             candidateEmail = eachOne[i].email
             candidateDateOfReg = eachOne[i].date
@@ -139,6 +144,7 @@ app.get('/api/newcandidates', function (req, res) {
                 'candidate_adminVerified': eachOne[i].adminVerified,
                 'candidate_about': eachOne[i].aboutYou,
                 'candidate_department': eachOne[i].department,
+                'candidate_faculty': eachOne[i].faculty,
                 'candidate_studentStatus': eachOne[i].studentStatus,
                 'candidateEmail': eachOne[i].email,
                 'candidateDateOfReg': eachOne[i].date
@@ -155,6 +161,8 @@ app.get('/api/voters', function (req, res) {
     var voterNames = []
     var voterRFIDRegistered = []
     var voterIds = []
+    var voterDepartment = []
+    var voterFaculty = []
     var voterImageUrls = []
     var voterEmail = []
     var voterDateOfReg = []
@@ -167,11 +175,15 @@ app.get('/api/voters', function (req, res) {
             voterImageUrls = eachOne[i].imageUrl
             voterEmail = eachOne[i].email
             voterDateOfReg = eachOne[i].date
+            voterDepartment = eachOne[i].department
+            voterFaculty = eachOne[i].faculty
 
             final.push({
                 'voter_id': eachOne[i]._id,
                 'voterImageUrl': eachOne[i].imageUrl,
                 'voter_name': eachOne[i].name,
+                'voterDepartment': eachOne[i].department,
+                'voterFaculty': eachOne[i].faculty,
                 'voterRFIDreg': eachOne[i].rfidRegistered,
                 'voterEmail': eachOne[i].email,
                 'voterDateOfReg': eachOne[i].date
@@ -184,7 +196,7 @@ app.get('/api/voters', function (req, res) {
 
 //POST REQUESTS
 app.post('/api/upload', function (req, res) {
-console.log(req);
+    console.log(req);
 
     upload(req, res, function (err) {
         if (err instanceof multer.MulterError) {
@@ -221,7 +233,7 @@ app.post('/api/changeImageUrlCand', async function (req, res) {
 
 app.post('/api/candAdded', async function (req, res) {
 
-    var myquery = { _id:  mongoose.Types.ObjectId(req.body.candidateId) };
+    var myquery = { _id: mongoose.Types.ObjectId(req.body.candidateId) };
     var newvalues = { $set: { adminVerified: true } };
 
     candidates.updateOne(myquery, newvalues).then(update => {
@@ -230,9 +242,9 @@ app.post('/api/candAdded', async function (req, res) {
 });
 
 app.post('/api/election', async function (req, res) {
-   
+
     election.create({
-        election_id: await election.count()+1,
+        election_id: await election.count() + 1,
         election_name: req.body.election_name,
         election_organizer: req.body.election_organizer,
         election_password: md5(req.body.election_password),
@@ -267,6 +279,7 @@ app.post('/api/userRegister', async function (req, res) {
                 name: req.body.name,
                 email: req.body.email,
                 department: req.body.department,
+                faculty: req.body.faculty,
                 studentStatus: req.body.studentStatus,
                 password: password,
             }).then(user => {
@@ -301,7 +314,7 @@ app.post('/api/userLogin', async function (req, res) {
             name: user.name,
             id: user._id,
             isAdmin: false,
-            isCand:true,
+            isCand: true,
         },
         process.env.TOKEN_SECRET
     );
@@ -323,7 +336,7 @@ app.post('/api/userLogin', async function (req, res) {
 
         },
         isAdmin: false,
-        isCand:false,
+        isCand: false,
         user: user,
     });
 });
@@ -351,7 +364,7 @@ app.post('/api/candLogin', async function (req, res) {
             name: user.name,
             id: user._id,
             isAdmin: false,
-            isCand:true,
+            isCand: true,
         },
         process.env.TOKEN_SECRET
     );
@@ -373,7 +386,7 @@ app.post('/api/candLogin', async function (req, res) {
 
         },
         isAdmin: false,
-        isCand:true,
+        isCand: true,
         user: user,
     });
 });
@@ -429,6 +442,7 @@ app.post('/api/candRegister', async function (req, res) {
                 aboutYou: req.body.aboutYou,
                 election_id: req.body.electionId,
                 department: req.body.department,
+                faculty: req.body.faculty,
                 studentStatus: req.body.studentStatus,
                 password: password,
             }).then(candidate => {

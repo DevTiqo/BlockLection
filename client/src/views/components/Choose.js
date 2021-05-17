@@ -70,8 +70,8 @@ class Choose extends Component {
                             This is a wider card with supporting text below as a natural lead-in to
                             additional content. This content is a little bit longer.
       </Card.Text>
-                        <Button onClick={this.handleInputChange} href={"./vote/" + election.election_id} variant="primary">View Election</Button>
-
+                        <Button onClick={this.handleInputChange} className="m-2" href={"./vote/" + election.election_id} variant="success">View Election</Button>
+                        <Button onClick={this.handleInputChange} className="m-2" href={"./voteCount/" + election.election_id} variant="warning">View Votes Count</Button>
 
                     </Card.Body>
                     <Card.Footer>

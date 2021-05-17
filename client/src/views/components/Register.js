@@ -17,7 +17,8 @@ const Register = () => {
     const [selectedFile, setSelectedFile] = useState('');
     const [show, setShow] = useState(false);
     const [error, setError] = useState("");
-    const [department, setDepartment] = useState("Computer Science");
+    const [department, setDepartment] = useState("Computer Engineering");
+    const [faculty, setFaculty] = useState("Faculty of Engineering");
     const [studentStatus, setStudentStatus] = useState("Under-Graduate");
 
 
@@ -35,6 +36,7 @@ const Register = () => {
                 name: name,
                 email: email,
                 department: department,
+                faculty: faculty,
                 studentStatus: studentStatus,
                 password: password,
                 cpassword: cpassword
@@ -193,17 +195,28 @@ const Register = () => {
                             <Form.Label>Name</Form.Label>
                             <Form.Control required type="text" placeholder="Name" onChange={(e) => setName(e.target.value)} />
                         </Form.Group>
+                        <Form.Group controlId="exampleForm.ControlSelect">
+                            <Form.Label>Faculty</Form.Label>
+                            <Form.Control as="select" onChange={(e) => setFaculty(e.target.value)}>
+                                <option value="Faculty of Engineering">Faculty of Engineering </option>
+                                <option value="Faculty of ">Faculty of </option>
+                                <option value="Faculty of ">Faculty of </option>
+                                <option value="Faculty of ">Faculty of </option>
+                                <option value="Faculty of ">Faculty of </option>
+                            </Form.Control>
+                        </Form.Group>
                         <Form.Group controlId="exampleForm.ControlSelect1">
                             <Form.Label>Department</Form.Label>
                             <Form.Control as="select" onChange={(e) => setDepartment(e.target.value)}>
-                                <option value="Computer Science">Computer Science</option>
+                                <option value="Computer Engineering">Computer Engineering</option>
                                 <option value="BioChemistry">BioChemistry</option>
                                 <option value="Physics">Physics</option>
                                 <option value="Medicine">Medicine</option>
                                 <option value="Farming">Farming</option>
                             </Form.Control>
                         </Form.Group>
-                        <Form.Group controlId="exampleForm.ControlSelect1">
+
+                        <Form.Group controlId="exampleForm.ControlSelect2">
                             <Form.Label>Student Status</Form.Label>
                             <Form.Control as="select" onChange={(e) => setStudentStatus(e.target.value)}>
                                 <option value="Under-Graduate">Under-Graduate</option>

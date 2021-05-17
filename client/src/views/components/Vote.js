@@ -89,6 +89,7 @@ class Vote extends Component {
                         <ListGroup >
                             <ListGroup.Item>For A Free and Fair Election</ListGroup.Item>
                         </ListGroup>
+
                         <Card.Text>
                             {candidates.candAbout}
                         </Card.Text>

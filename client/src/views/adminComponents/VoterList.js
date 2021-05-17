@@ -11,6 +11,8 @@ const Voters = (props) => {
     const [voterName, setVoterName] = useState([]);
     const [voterRFID, setVoterRFID] = useState([]);
     const [voterId, setVoterId] = useState([]);
+    const [voterFaculty, setVoterFaculty] = useState([]);
+    const [voterDepartment, setVoterDepartment] = useState([]);
     const [voterImageUrl, setVoterImageUrl] = useState([]);
     const [voterEmail, setVoterEmail] = useState([]);
     const [voterDate, setVoterDate] = useState([]);
@@ -32,6 +34,8 @@ const Voters = (props) => {
                 setVoterName(data[0]["voter_name"]);
                 setVoterRFID(data[0]["voterRFIDreg"]);
                 setVoterId(data[0]["voter_id"]);
+                setVoterFaculty(data[0]["voterFaculty"]);
+                setVoterDepartment(data[0]["voterDepartment"]);
                 setVoterImageUrl(data[0]["voterImageUrl"]);
                 setVoterEmail(data[0]["voterEmail"]);
                 setVoterDate(data[0]["voterDateOfReg"]);

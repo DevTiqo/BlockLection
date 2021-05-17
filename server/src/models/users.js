@@ -23,13 +23,19 @@ const user = mongoose.model('user', {
         min: 6,
         max: 1024,
     },
+    faculty: {
+        type: String,
+        required: true,
+        min: 6,
+        max: 1024,
+    },
     department: {
         type: String,
         required: true,
         min: 6,
         max: 100,
     },
-     studentStatus: {
+    studentStatus: {
         type: String,
         required: true,
         min: 6,

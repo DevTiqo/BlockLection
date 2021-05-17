@@ -23,10 +23,10 @@ const candidate = mongoose.model('candidate', {
     profileImg: {
         type: String
     },
-     election_id: {
+    election_id: {
         type: Number,
         required: true,
-        default:0
+        default: 0
     },
     password: {
         type: String,
@@ -34,13 +34,19 @@ const candidate = mongoose.model('candidate', {
         min: 6,
         max: 1024,
     },
-      studentStatus: {
+    studentStatus: {
         type: String,
         required: true,
         min: 6,
         max: 1024,
     },
-      department: {
+    faculty: {
+        type: String,
+        required: true,
+        min: 6,
+        max: 1024,
+    },
+    department: {
         type: String,
         required: true,
         min: 6,
