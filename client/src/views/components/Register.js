@@ -11,6 +11,7 @@ import { CameraFeed } from './CameraFeed';
 
 const Register = () => {
     const [name, setName] = useState('')
+    const [matnum, setMatNum] = useState('')
     const [email, setEmail] = useState('')  //component level state right here, not application level state
     const [password, setPassword] = useState('')
     const [cpassword, setCPassword] = useState('')
@@ -34,6 +35,7 @@ const Register = () => {
         if (selectedFile !== '') {
             axios.post('http://localhost:8000/api/userRegister', {
                 name: name,
+                matnum: matnum,
                 email: email,
                 department: department,
                 faculty: faculty,
@@ -195,6 +197,10 @@ const Register = () => {
                             <Form.Label>Name</Form.Label>
                             <Form.Control required type="text" placeholder="Name" onChange={(e) => setName(e.target.value)} />
                         </Form.Group>
+                        <Form.Group controlId="formName">
+                            <Form.Label>ID Number</Form.Label>
+                            <Form.Control required type="text" placeholder="ID Number" onChange={(e) => setMatNum(e.target.value)} />
+                        </Form.Group>
                         <Form.Group controlId="exampleForm.ControlSelect">
                             <Form.Label>Faculty</Form.Label>
                             <Form.Control as="select" onChange={(e) => setFaculty(e.target.value)}>
@@ -208,11 +214,13 @@ const Register = () => {
                         <Form.Group controlId="exampleForm.ControlSelect1">
                             <Form.Label>Department</Form.Label>
                             <Form.Control as="select" onChange={(e) => setDepartment(e.target.value)}>
+
                                 <option value="Computer Engineering">Computer Engineering</option>
                                 <option value="BioChemistry">BioChemistry</option>
                                 <option value="Physics">Physics</option>
                                 <option value="Medicine">Medicine</option>
-                                <option value="Farming">Farming</option>
+                                <option value="Political Science">Political Science</option>
+                                <option value="Other">Other</option>
                             </Form.Control>
                         </Form.Group>
 

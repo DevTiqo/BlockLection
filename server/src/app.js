@@ -62,6 +62,7 @@ app.get('/api/election', function (req, res) {
 
 app.get('/api/candidates', function (req, res) {
     var candidateNames = []
+    var candidateMatNums = []
     var candidateElectionId = []
     var candidateDepartment = []
     var candidateFaculty = []
@@ -76,6 +77,7 @@ app.get('/api/candidates', function (req, res) {
     candidates.find({}).then(eachOne => {
         for (i = 0; i < eachOne.length; i++) {
             candidateNames = eachOne[i].name
+            candidateMatNums = eachOne[i].matnum
             candidateElectionId = eachOne[i].election_id
             candidateIds = eachOne[i]._id
             candidateDepartment = eachOne[i].department
@@ -93,6 +95,7 @@ app.get('/api/candidates', function (req, res) {
                 'candidate_electionId': eachOne[i].election_id,
                 'candidateImageUrl': eachOne[i].imageUrl,
                 'candidate_name': eachOne[i].name,
+                'candidate_matnum': eachOne[i].matnum,
                 'candidate_adminVerified': eachOne[i].adminVerified,
                 'candidate_about': eachOne[i].aboutYou,
                 'candidate_department': eachOne[i].department,
@@ -110,6 +113,7 @@ app.get('/api/candidates', function (req, res) {
 
 app.get('/api/newcandidates', function (req, res) {
     var candidateNames = []
+    var candidateMatNums = []
     var candidateElectionId = []
     var candidateDepartment = []
     var candidateFaculty = []
@@ -124,6 +128,7 @@ app.get('/api/newcandidates', function (req, res) {
     candidates.find({ electionId: req.body.id, adminVerified: false }).then(eachOne => {
         for (i = 0; i < eachOne.length; i++) {
             candidateNames = eachOne[i].name
+            candidateMatNums = eachOne[i].matnum
             candidateElectionId = eachOne[i].election_id
             candidateIds = eachOne[i]._id
             candidateDepartment = eachOne[i].department
@@ -141,6 +146,7 @@ app.get('/api/newcandidates', function (req, res) {
                 'candidate_electionId': eachOne[i].election_id,
                 'candidateImageUrl': eachOne[i].imageUrl,
                 'candidate_name': eachOne[i].name,
+                'candidate_matnum': eachOne[i].matnum,
                 'candidate_adminVerified': eachOne[i].adminVerified,
                 'candidate_about': eachOne[i].aboutYou,
                 'candidate_department': eachOne[i].department,
@@ -277,6 +283,7 @@ app.post('/api/userRegister', async function (req, res) {
         await users.create(
             {
                 name: req.body.name,
+                matnum: req.body.matnum,
                 email: req.body.email,
                 department: req.body.department,
                 faculty: req.body.faculty,
@@ -438,6 +445,7 @@ app.post('/api/candRegister', async function (req, res) {
         await candidates.create(
             {
                 name: req.body.name,
+                matnum: req.body.matnum,
                 email: req.body.email,
                 aboutYou: req.body.aboutYou,
                 election_id: req.body.electionId,

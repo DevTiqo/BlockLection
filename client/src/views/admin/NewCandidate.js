@@ -9,16 +9,18 @@ import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import CardColumns from 'react-bootstrap/CardColumns';
 import { Button, Container, Row, ListGroup } from 'react-bootstrap';
-
+import ScaleLoader from "react-spinners/ScaleLoader";
+import { ToastContainer, toast } from 'react-toastify';
 
 const NewCandidate = (props) => {
 
-  const [loading, setLoading] = useState(false);
+  
 
   const [candidateName, setCandidateName] = useState(null);
   const [candidateDetails, setCandidateDetails] = useState(null);
   const [final, setFinal] = useState([]);
   const [id, setId] = useState(null);
+  const [loading,setLoading] = useState(true)
 
 
 
@@ -38,11 +40,13 @@ const NewCandidate = (props) => {
         var data = response.data;
         console.log(data[0])
         setFinal(data);
+        setLoading(false);
 
 
       })
       .catch(function (err) {
         console.error(err);
+         setLoading(false);
       });
 
   }, []);
@@ -57,6 +61,8 @@ const NewCandidate = (props) => {
 
   async function add(candidateId, candidateName, candidateDetails, id, candidateImageUrl) {
 
+   setLoading(true);
+
     await BlockChain.loadWeb3()
     await BlockChain.loadBlockchainData()
     try {
@@ -64,10 +70,17 @@ const NewCandidate = (props) => {
       console.log(candidateName);
       console.log(candidateDetails);
       console.log(id);
-      await BlockChain.addCand(candidateId, candidateName, candidateDetails, id, candidateImageUrl)
-        .then(result => {
+  
 
-          axios.post('http://localhost:8000/api/candAdded', {
+
+var receipt = await  BlockChain.addCand(candidateId, candidateName, candidateDetails, id, candidateImageUrl)
+ receipt[0].addCandidate(candidateId, candidateName, candidateDetails, id.toString(), candidateImageUrl).send({ from: receipt[1], gas: 520000 })
+        .on('receipt', function (receipt) {
+                //console.log(receipt.status);
+
+                console.log(receipt);
+
+                  axios.post('http://localhost:8000/api/candAdded', {
             candidateId: candidateId
           })
             .then(function (response) {
@@ -83,15 +96,39 @@ const NewCandidate = (props) => {
             });
 
 
-          // window.location.assign("/admin/elections");
+                toast.success("Candidate Succcessfully added to blockchain")
 
-        })
+
+
+                setTimeout(function () {
+            
+            window.location.href = '/admin/voteCount/' + id + ''
+            
+             },2000)
+
+setLoading(false)
+            })
+            .on('error', function (error) {
+                toast.error("Candidate Exception Error Occured")
+                setLoading(false)
+            })
+
+
+
+
+        
+
+
+    
     } catch (err) {
       console.log(err);
+      setLoading(false)
     }
+
+       
   }
 
-  const candidateList = final.length > 0 ? final.map(candidate => {
+  const candidateList = final.length > 0 && !loading  ? final.map(candidate => {
     return (
       candidate.candidate_electionId == id && !candidate.candidate_adminVerified ?
 
@@ -127,13 +164,33 @@ const NewCandidate = (props) => {
         </Card>
         : <div></div>
     )
-  }) : <div>No Candidate Application Available </div>
+  }) : <div style={{ margin: "auto" }}>
+                {loading ?
+                    <div className='d-flex'>
+                        <div className='mx-auto d-flex justify-center'>
+
+                            <ScaleLoader
+                                size={50}
+                                color={"#667eea"}
+                                loading={true}
+                            />
+
+                        </div>
+                    </div>
+                    :
+                    <div className='flex h-screen'>
+                        <div className='m-auto'>
+                            NO CANDIDATE APPLICATION AVAILABLE IN THIS ELECTION
+                    </div>
+                    </div>
+                }
+            </div>
 
   return (
     <div className="container">
       <h4>Add candidates to Election</h4>
       <h3>Candidates</h3>
-
+<ToastContainer />
       <CardColumns>
         {candidateList}
       </CardColumns>

@@ -14,6 +14,7 @@ import {
     Link,
     History
 } from "react-router-dom";
+import 'react-toastify/dist/ReactToastify.css';
 import NewCandidate from './views/admin/NewCandidate';
 import UserView from './views/user/UserView';
 import AdminView from './views/admin/AdminView';
@@ -37,62 +38,62 @@ const routes = [
     {
         path: "/home",
         component: Landing,
-        AuthReq:false
+        AuthReq: false
     },
     {
         path: "/user",
         component: UserView,
         routes: [
-            
+
             {
                 path: "/user/login",
                 component: Login,
-                AuthReq:false
+                AuthReq: false
             },
             {
                 path: "/user/candlogin",
                 component: CandLogin,
-                AuthReq:false
+                AuthReq: false
             },
             {
                 path: '/user/vote/:id',
                 component: Vote,
-                AuthReq:true
+                AuthReq: true
             },
             {
                 path: '/user/choose',
                 component: Choose,
-                AuthReq:true
+                AuthReq: true
             },
             {
                 path: '/user/voteCount/:id',
                 component: VoteCount,
-                AuthReq:true
+                AuthReq: true
             },
             {
                 path: '/user/register',
                 component: Register,
-                AuthReq:false
+                AuthReq: false
             },
             {
                 path: '/user/candregister',
                 component: CandRegister,
-                AuthReq:false
+                AuthReq: false
             },
             {
                 path: '/user/home',
                 component: UserHome,
-                AuthReq:false
+                AuthReq: false
             },
-             {
+            {
                 path: '/user/rfidregister',
                 component: RfidRegister,
-                AuthReq:false
+                AuthReq: false
             },
             {
                 path: '/user/rfidvote',
                 component: RfidVote,
-                AuthReq:true
+                AuthReq: true
             }
 
         ]
@@ -100,47 +101,47 @@ const routes = [
     {
         path: "/admin",
         component: AdminView,
-        Adminreq:true,
+        Adminreq: true,
         routes: [
             {
                 path: "/admin/elections",
                 component: ElectionData,
-                AuthReq:true
+                AuthReq: true
             },
-             {
+            {
                 path: "/admin/home",
                 component: AdminHome,
-                AuthReq:false
+                AuthReq: false
             },
             {
                 path: "/admin/newcandidates/:id",
                 component: NewCandidate,
-                AuthReq:true
+                AuthReq: true
             },
             {
                 path: "/admin/candidates",
                 component: CandidateList,
-                AuthReq:true
+                AuthReq: true
             },
             {
                 path: "/admin/newElection",
                 component: NewElection,
-                AuthReq:true
+                AuthReq: true
             },
             {
                 path: '/admin/voters',
                 component: VoterList,
-                AuthReq:true
+                AuthReq: true
             },
             {
                 path: '/admin/login',
                 component: AdminLogin,
-                AuthReq:false
+                AuthReq: false
             },
             {
                 path: '/admin/voteCount/:id',
                 component: VoteCount,
-                AuthReq:true
+                AuthReq: true
             }
         ]
     }
@@ -162,25 +163,25 @@ const App = () => {
     return (
 
         <Router>
-        <div className="App">
-        <Switch>
-            
+            <div className="App">
+                <Switch>
 
-                {/* {routes.map((route, i) => (
+
+                    {/* {routes.map((route, i) => (
                     <RouteWithSubRoutes key={i} {...route} />
                 ))} */}
 
-                {routes.map((route) => (
-                    <RouteWithSubRoutes key={route.path} {...route} />
-                ))}
+                    {routes.map((route) => (
+                        <RouteWithSubRoutes key={route.path} {...route} />
+                    ))}
 
-                <Route exact path="/">
-                    <Redirect to="/home" />
-                </Route>
-             
-                    
-            
-            </Switch>
+                    <Route exact path="/">
+                        <Redirect to="/home" />
+                    </Route>
+
+
+
+                </Switch>
             </div>
         </Router>
     );

@@ -50,13 +50,13 @@ async function loadBlockchainData() {
 
 
 async function loadWeb3() {
-    if (Web3.givenProvider || "ws://localhost:8545") {
-        window.web3 = new Web3(Web3.givenProvider || "ws://localhost:8545")
 
-    }
-    else if (window.ethereum) {
+    if (window.ethereum) {
         window.web3 = new Web3(window.ethereum)
         await window.ethereum.enable()
+    } else if (Web3.givenProvider || "ws://localhost:8545") {
+        window.web3 = new Web3(Web3.givenProvider || "ws://localhost:8545")
+
     }
     else {
         window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
@@ -87,11 +87,9 @@ async function loadCandidates(id) {
 async function addCand(candidateId, candidateName, candidateDetails, id, imageUrl) {
 
     console.log(account);
-    election.methods.addCandidate(candidateId, candidateName, candidateDetails, id.toString(), imageUrl).send({ from: account, gas: 520000 })
-        .once('receipt', (receipt) => {
-            console.log(receipt);
-            return receipt;
-        })
+    return [election.methods, account];
+
+   
 }
 
 
@@ -100,11 +98,22 @@ async function vote(id) {
 
     console.log(account);
 
-    election.methods.vote(id).send({ from: account, gas: 520000 })
-        .once('receipt', (receipt) => {
-            console.log(receipt);
-            return receipt;
-        })
+
+    return [election.methods, account];
+
+    // .on('receipt', function (receipt) {
+    //     //console.log(receipt.status);
+
+    //     console.log(receipt);
+    //     return receipt;
+
+    // })
+    // .on('error', function (error) {
+    //     return error
+    // })
+
+
+
 }
 
 

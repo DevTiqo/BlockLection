@@ -2,6 +2,7 @@ const Joi = require("@hapi/joi");
 const registerValidation = (data) => {
     const schema = Joi.object({
         name: Joi.string().min(6).max(255).required(),
+        matnum: Joi.string().min(6).max(255).required(),
         email: Joi.string().min(6).max(255).required().email(),
         department: Joi.string().min(1).max(255).required(),
         faculty: Joi.string().min(1).max(255).required(),
@@ -15,6 +16,7 @@ const registerValidation = (data) => {
 const registerCandValidation = (data) => {
     const schema = Joi.object({
         name: Joi.string().min(6).max(255).required(),
+        matnum: Joi.string().min(6).max(255).required(),
         email: Joi.string().min(6).max(255).required().email(),
         electionId: Joi.number().min(1).max(255).required(),
         department: Joi.string().min(1).max(255).required(),

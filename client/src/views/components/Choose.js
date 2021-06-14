@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import CardColumns from 'react-bootstrap/CardColumns';
 import { Button, Container, Row } from 'react-bootstrap';
+import ScaleLoader from "react-spinners/ScaleLoader";
 
 class Choose extends Component {
 
@@ -17,6 +18,7 @@ class Choose extends Component {
             election_id: [],
             final: [],
             id: null,
+            loading: true,
         };
     }
 
@@ -33,7 +35,9 @@ class Choose extends Component {
             .catch(function (err) {
                 console.error(err);
             });
-
+        this.setState({
+            loading: false,
+        })
     }
 
     handleInputChange = (e) => {
@@ -67,9 +71,9 @@ class Choose extends Component {
                     <Card.Body>
                         <Card.Title>{election.election_name}</Card.Title>
                         <Card.Text>
-                            This is a wider card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.
-      </Card.Text>
+
+                            {election.election_organizer}
+                        </Card.Text>
                         <Button onClick={this.handleInputChange} className="m-2" href={"./vote/" + election.election_id} variant="success">View Election</Button>
                         <Button onClick={this.handleInputChange} className="m-2" href={"./voteCount/" + election.election_id} variant="warning">View Votes Count</Button>
 
@@ -89,7 +93,25 @@ class Choose extends Component {
                     <h3 className="p-2">Ongoing Elections</h3>
                 </Col>
                 <CardColumns>
-                    {electionList}
+                    {this.state.loading ?
+                        <div className='d-flex'>
+                            <div className='mx-auto d-flex justify-center'>
+
+                                <ScaleLoader
+                                    size={50}
+                                    color={"#667eea"}
+                                    loading={true}
+                                />
+                            </div>
+                        </div>
+                        :
+                        <div className='flex h-screen'>
+                            <div className='m-auto'>
+                                {electionList}
+                            </div>
+                        </div>
+                    }
+
                 </CardColumns>
 
             </Container>
