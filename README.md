@@ -10,9 +10,10 @@ A simple E-voting Decentralised App using the Ethereum Blockchain, Solidity and 
 
 The E-Voting app has 2 main users:
 1. Admin 
-2. Voter
+2. Voters
 
-Admin can create an election and add candidates to the Ethereum Blockchain
+
+Admin can create an election, manage elections and add candidates to the Ethereum Blockchain
 
 Users(Voters) can select an election and vote for a candidate of their choice
 
